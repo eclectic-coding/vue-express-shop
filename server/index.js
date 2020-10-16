@@ -1,6 +1,5 @@
 const express = require('express');
 const colors = require('colors');
-const mongoose = require('mongoose');
 const morgan = require('morgan');
 const errorHandler = require('./middleware/error')
 const cors = require('cors');
