@@ -1,15 +1,19 @@
 const express = require('express');
-const dotenv = require('dotenv')
-const colors = require('colors')
+const colors = require('colors');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
+const errorHandler = require('./middleware/error')
 const cors = require('cors');
+
+require('dotenv').config();
 
 // Route files
 const shopRoutes = require('./routes/shop.js');
 const adminRoutes = require('./routes/admin.js');
 
-// Load environment variables
-dotenv.config({ path: './config/config.env'})
+// Connect to database
+const connectDB = require('./config/db');
+connectDB();
 
 const app = express();
 
@@ -27,6 +31,7 @@ if (process.env.NODE_ENV === 'development') {
 // Mount routes
 app.use(adminRoutes);
 app.use('/api/v1/products', shopRoutes);
+app.use(errorHandler)
 
 // Add production SPA work around
 if (process.env.NODE_ENV === 'production') {
@@ -37,5 +42,18 @@ if (process.env.NODE_ENV === 'production') {
   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
 }
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => (console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.cyan.bold)));
+const PORT = process.env.PORT || 3000;
+
+const server = app.listen(
+  PORT,
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
+  )
+);
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`.red);
+  // Close server & exit process
+  server.close(() => process.exit(1));
+});
+
