@@ -16,9 +16,13 @@ const productSchema = new Schema({
   description: {
     type: String,
     required: [true, 'Please add a Product description'],
-    maxlength: [500, 'Description can not be more than 500 characters']
+    maxlength: [2000, 'Description can not be more than 500 characters']
   },
-  imageUrl: {
+  category: {
+    type:String,
+    required: true
+  },
+  image: {
     type: String,
     required: true
   }
