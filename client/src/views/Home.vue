@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    {{ products }}
     <div class="card" v-for="prod in products" :key="prod.id">
       <img :src="prod.image" alt="" style="width: 300px" />
       <div class="card__container">
@@ -23,13 +22,14 @@ export default {
     };
   },
   created() {
-    ProductService.getProducts()
-      .then(resp => {
-        this.products = resp.data.data;
-      })
-      .catch(err => {
-        console.log("There was an error: " + err.response);
-      });
+    // fetch("http://localhost:5000/api/v1/products")
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     this.products = data.products;
+    //   });
+    ProductService.getProducts().then(data => {
+      this.products = data.products;
+    });
   }
 };
 </script>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiClient = axios.create({
   baseURL: `http://localhost:5000`,
-  ithCredentials: false, // This is the default
+  withCredentials: false, // This is the default
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json"
@@ -11,7 +11,7 @@ const apiClient = axios.create({
 
 export default {
   getProducts() {
-    return apiClient.get("/api/v1/products");
+    return apiClient.get("/api/v1/products").then(resp => resp.data);
   },
   getProduct(id) {
     return apiClient.get("/api/v1/products/" + id);

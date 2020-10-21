@@ -7,7 +7,7 @@ const Product = require('../models/product');
 // @access  Public
 exports.getMany = asyncHandler(async (req, res, next) => {
   const products = await Product.find();
-  res.status(200).json({ success: true, count: products.length, products: products });
+  res.status(200).json({ products: products });
 });
 
 // @desc    Get single product
