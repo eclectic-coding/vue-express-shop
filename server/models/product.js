@@ -35,8 +35,10 @@ const productSchema = new Schema({
 
 // Create product slug from the title
 productSchema.pre('save', function (next) {
-  this.slug = slugify(this.title, { lower: true });
-  // console.log('Slugify ran', this.title);
+  this.slug = slugify(this.title, {
+    lower: true,
+    remove: /[*+~.()'"!:@]/g
+  });
   next();
 
 });
