@@ -11,12 +11,12 @@ const apiClient = axios.create({
 
 export default {
   getProducts() {
-    return apiClient.get("/api/v1/products").then(resp => resp.data);
+    return apiClient.get("/api/v1/products/").then(resp => resp.data);
   },
   getProduct(id) {
-    return apiClient.get("/api/v1/products/" + id);
+    return apiClient.get("/api/v1/products/" + id).then(resp => resp.data);
   },
   postProduct(product) {
-    return apiClient.post("/api/v1/products", product);
+    return apiClient.post("/api/v1/products", product).then(resp => resp.data);
   }
 };

@@ -37,7 +37,7 @@ const productSchema = new Schema({
 productSchema.pre('save', function (next) {
   this.slug = slugify(this.title, {
     lower: true,
-    remove: /[*+~.()'"!:@]/g
+    remove: /[*+~.()'"!:@,]/g
   });
   next();
 
